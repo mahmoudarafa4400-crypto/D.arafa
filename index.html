@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيادات الدكتور محمود عرفة بالمنوفية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-tooth"></i>
+                    <div class="logo-text">
+                        <h1>عيادات الدكتور محمود عرفة</h1>
+                        <p>طب وتقويم وزراعة الأسنان - المنوفية</p>
+                    </div>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">الرئيسية</a></li>
+                    <li><a href="#services">خدماتنا</a></li>
+                    <li><a href="#appointment">حجز موعد</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h2>عيادات الدكتور محمود عرفة بالمنوفية</h2>
+                <p>نقدم لكم أحدث خدمات طب الأسنان بتقنيات عالمية وبرعاية طبية متميزة، مع الحفاظ على راحتكم ورضاكم التام.</p>
+                
+                <div class="clinic-motto">
+                    <h3>شعار عيادتنا</h3>
+                    <p>نحن نعمل من أجل ابتسامتك وليس من أجل أموالك، والأرزاق بيد الله وهذا من فضله وحده</p>
+                </div>
+                
+                <button class="cta-button" id="bookAppointmentBtn">احجز موعد الآن</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدماتنا الطبية</h2>
+            </div>
+            
+            <div class="services-grid" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <section class="appointment" id="appointment">
+        <div class="container">
+            <div class="section-title">
+                <h2>حجز موعد</h2>
+            </div>
+            
+            <div class="appointment-form">
+                <form id="appointmentForm">
+                    <div class="form-group">
+                        <input type="text" id="patientName" placeholder="الاسم الكامل" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="tel" id="patientPhone" placeholder="رقم الهاتف" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="serviceType" required>
+                            <option value="">اختر الخدمة المطلوبة</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="date" id="appointmentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <select id="appointmentTime" required>
+                            <option value="">اختر الوقت المناسب</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">تأكيد الحجز</button>
+                </form>
+                
+                <div class="appointment-result" id="appointmentResult"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid" id="statsGrid"></div>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>اتصل بنا</h2>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>عنوان العيادة</h3>
+                    <p>المنوفية، مصر</p>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-phone"></i>
+                    <h3>هاتف العيادة</h3>
+                    <p>01018673010</p>
+                    <a href="https://wa.me/201018673010?text=مرحباً، أود حجز موعد في عيادة الدكتور محمود عرفة" class="whatsapp-contact-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+                    </a>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>ساعات العمل</h3>
+                    <p>من السبت إلى الخميس: 9 صباحاً - 9 مساءً</p>
+                    <p>الجمعة: 2 ظهراً - 9 مساءً</p>
+                    
+                    <div class="social-media">
+                        <a href="https://www.facebook.com" class="social-icon facebook" target="_blank" title="صفحة الفيسبوك">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com" class="social-icon instagram" target="_blank" title="حساب الإنستجرام">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/201018673010?text=مرحباً، أود حجز موعد في عيادة الدكتور محمود عرفة" class="whatsapp-btn-fixed" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>عن العيادة</h3>
+                    <p>عيادات الدكتور محمود عرفة توفر أحدث خدمات طب الأسنان في المنوفية، مع الاهتمام براحة المريض ورضاه التام عن الخدمة المقدمة.</p>
+                    <div class="social-media">
+                        <a href="https://www.facebook.com" class="social-icon facebook" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com" class="social-icon instagram" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>خدماتنا</h3>
+                    <ul id="footerServices"></ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>معلومات الاتصال</h3>
+                    <p><i class="fas fa-phone"></i> 01018673010</p>
+                    <p><i class="fas fa-map-marker-alt"></i> المنوفية، مصر</p>
+                    <p><i class="fas fa-clock"></i> السبت - الخميس: 9 ص - 9 م</p>
+                    <p><i class="fas fa-clock"></i> الجمعة: 2 ظ - 9 م</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; عيادات الدكتور محمود عرفة بالمنوفية <span id="currentYear"></span></p>
+                <p style="margin-top: 5px;">نحن نعمل من أجل ابتسامتك وليس من أجل أموالك - الأرزاق بيد الله وهذا من فضله وحده</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+    <script src="bookingSystem.js"></script>
+</body>
+</html>
