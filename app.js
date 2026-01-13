@@ -57,6 +57,28 @@ class DentalClinicApp {
             <div class="service-content">
                 <h3>${service.name}</h3>
                 <p>${service.description}</p>
+                
+                <div class="doctor-info">
+                    <div class="doctor-name">
+                        <i class="fas fa-user-md"></i>
+                        ${service.doctor}
+                    </div>
+                    <div class="doctor-specialization">
+                        ${service.specialization}
+                    </div>
+                    
+                    ${service.features ? `
+                    <div class="service-features">
+                        <h4>
+                            <i class="fas fa-star"></i>
+                            مميزات الخدمة:
+                        </h4>
+                        <ul>
+                            ${service.features.map(feature => `<li>${feature}</li>`).join('')}
+                        </ul>
+                    </div>
+                    ` : ''}
+                </div>
             </div>
         `;
         return card;
@@ -289,10 +311,10 @@ class DentalClinicApp {
     
     getServiceName(serviceId) {
         const services = {
-            '1': "تقويم الأسنان",
-            '2': "زراعة الأسنان", 
-            '3': "تبييض الأسنان",
-            '4': "طب الفم والأسنان"
+            '1': "تقويم الأسنان (د. عمر عزيز)",
+            '2': "زراعة الأسنان (د. يوسف عزام)", 
+            '3': "تبييض الأسنان (د. محمود عرفة)",
+            '4': "طب الفم والأسنان (د. محمود عرفة)"
         };
         return services[serviceId] || 'خدمة غير معروفة';
     }
@@ -317,7 +339,7 @@ class DentalClinicApp {
             // هذه الحقول إلزامية لـ Formspree
             formData.append('_replyto', appointmentData.clinicEmail);
             formData.append('_subject', `New Appointment - ${appointmentData.clinic}`);
-            formData.append('email', appointmentData.clinicEmail); // حقل email إضافي
+            formData.append('email', appointmentData.clinicEmail);
             
             console.log('بيانات FormData:', Object.fromEntries(formData));
             
@@ -350,7 +372,7 @@ class DentalClinicApp {
                 return {
                     success: true,
                     data: result,
-                    next: result.next // رابط التوجيه التالي إذا كان موجوداً
+                    next: result.next
                 };
             } else {
                 const errorText = await response.text();
@@ -451,11 +473,31 @@ class DentalClinicApp {
     }
     
     sendWhatsAppNotification(appointmentData) {
+        const serviceId = appointmentData.service;
+        let doctorName = '';
+        
+        // تحديد اسم الطبيب بناءً على الخدمة
+        switch(serviceId) {
+            case '1':
+                doctorName = 'د. عمر عزيز (استشاري تقويم الأسنان)';
+                break;
+            case '2':
+                doctorName = 'د. يوسف عزام (ماجستير زراعة الأسنان)';
+                break;
+            case '3':
+            case '4':
+                doctorName = 'د. محمود عرفة (أخصائي طب الفم والأسنان)';
+                break;
+            default:
+                doctorName = 'أحد أطباء العيادة';
+        }
+        
         const message = `🔔 حجز موعد جديد - عيادة الدكتور محمود عرفة
 
 👤 المريض: ${appointmentData.name}
 📞 الهاتف: ${appointmentData.phone}
 🦷 الخدمة: ${appointmentData.serviceName}
+👨‍⚕️ الطبيب: ${doctorName}
 📅 التاريخ: ${appointmentData.date}
 ⏰ الوقت: ${appointmentData.time}
 🕐 وقت التسجيل: ${appointmentData.timestamp}
@@ -532,7 +574,6 @@ class DentalClinicApp {
         // إخفاء النتيجة بعد 30 ثانية
         setTimeout(() => {
             if (resultElement.innerHTML.includes('🎉')) {
-                // إذا كانت رسالة نجاح، لا تخفيها بسرعة
                 setTimeout(() => {
                     resultElement.className = 'appointment-result';
                     resultElement.textContent = '';
@@ -577,7 +618,6 @@ class DentalClinicApp {
             </div>
         `;
         
-        // إضافة تأثير hover للرابط
         const link = whatsappLink.querySelector('a');
         link.addEventListener('mouseenter', () => {
             link.style.transform = 'translateY(-3px) scale(1.03)';
@@ -590,15 +630,12 @@ class DentalClinicApp {
         
         link.addEventListener('click', (e) => {
             console.log('📱 فتح واتساب:', whatsappUrl);
-            // يمكن فتح في نافذة جديدة أو نفس النافذة
-            // window.open(whatsappUrl, '_blank');
         });
         
         resultElement.appendChild(whatsappLink);
     }
     
     setupPostBookingActions(appointmentId, resultElement) {
-        // إضافة زر لحفظ الحجز
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = '💾 حفظ معلومات الحجز';
         saveBtn.style.cssText = 'margin: 10px; padding: 15px 30px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);';
@@ -619,7 +656,6 @@ class DentalClinicApp {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚠️ يرجى الاحتفاظ بهذه المعلومات للرجوع إليها`;
             
-            // حفظ كملف نصي
             const blob = new Blob([bookingDetails], { type: 'text/plain;charset=utf-8' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -632,7 +668,6 @@ class DentalClinicApp {
                 URL.revokeObjectURL(url);
             }, 100);
             
-            // رسالة تأكيد
             const msg = document.createElement('div');
             msg.textContent = '✅ تم حفظ معلومات الحجز في ملف نصي';
             msg.style.cssText = 'position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 15px; border-radius: 8px; z-index: 10000; animation: fadeInOut 3s;';
@@ -640,7 +675,6 @@ class DentalClinicApp {
             setTimeout(() => msg.remove(), 3000);
         };
         
-        // إضافة زر للتقويم
         const calendarBtn = document.createElement('button');
         calendarBtn.innerHTML = '📅 إضافة تذكير بالتقويم';
         calendarBtn.style.cssText = 'margin: 10px; padding: 15px 30px; background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: white; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 16px; transition: all 0.3s; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);';
@@ -652,7 +686,6 @@ class DentalClinicApp {
 هاتف العيادة: 01018673010`;
             const location = 'المنوفية، مصر';
             
-            // إنشاء رابط Google Calendar
             const startDate = new Date();
             startDate.setDate(startDate.getDate() + 3);
             const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
@@ -665,7 +698,6 @@ class DentalClinicApp {
             window.open(calendarUrl, '_blank', 'noopener,noreferrer');
         };
         
-        // إضافة تأثير hover للأزرار
         [saveBtn, calendarBtn].forEach(btn => {
             btn.addEventListener('mouseenter', () => {
                 btn.style.transform = 'translateY(-3px)';
@@ -677,7 +709,6 @@ class DentalClinicApp {
             });
         });
         
-        // إضافة الأزرار إلى صفحة النتيجة
         if (resultElement) {
             const actionDiv = document.createElement('div');
             actionDiv.style.marginTop = '30px';
@@ -748,7 +779,6 @@ class DentalClinicApp {
             });
         }
         
-        // تعيين الحد الأدنى للتاريخ إلى اليوم
         const today = new Date().toISOString().split('T')[0];
         const dateInput = document.getElementById('appointmentDate');
         if (dateInput) {
@@ -756,7 +786,6 @@ class DentalClinicApp {
             this.setDefaultDate();
         }
         
-        // تحسين تجربة المستخدم
         const nameInput = document.getElementById('patientName');
         const phoneInput = document.getElementById('patientPhone');
         
@@ -777,10 +806,8 @@ class DentalClinicApp {
             });
         }
         
-        // إضافة أنماط CSS ديناميكية
         this.addDynamicStyles();
         
-        // اختبار Formspree عند التحميل
         setTimeout(() => this.testFormspreeConnection(), 2000);
     }
     
@@ -811,7 +838,6 @@ class DentalClinicApp {
     async testFormspreeConnection() {
         console.log('🔍 اختبار اتصال Formspree...');
         try {
-            // اختبار بسيط
             const testData = new URLSearchParams();
             testData.append('test', 'connection');
             testData.append('_replyto', 'test@example.com');
@@ -828,12 +854,6 @@ class DentalClinicApp {
             });
             
             console.log('✅ Formspree connection test:', response.status, response.statusText);
-            
-            if (response.ok) {
-                console.log('🎯 Formspree جاهز للاستخدام!');
-            } else {
-                console.warn('⚠️ Formspree قد يحتاج إعدادات إضافية');
-            }
             
         } catch (error) {
             console.error('❌ Formspree connection failed:', error);
@@ -852,13 +872,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             console.error('❌ ClinicConfig غير معرّف! تأكد من تحميل config.js أولاً');
             
-            // خيار بديل إذا فشل تحميل config.js
             const fallbackConfig = {
                 services: [
-                    { id: 1, name: "تقويم الأسنان", description: "تقويم الأسنان", image: "" },
-                    { id: 2, name: "زراعة الأسنان", description: "زراعة الأسنان", image: "" },
-                    { id: 3, name: "تبييض الأسنان", description: "تبييض الأسنان", image: "" },
-                    { id: 4, name: "طب الفم والأسنان", description: "طب الفم والأسنان", image: "" }
+                    { id: 1, name: "تقويم الأسنان", description: "تقويم الأسنان", image: "", doctor: "د. عمر عزيز", specialization: "استشاري تقويم الأسنان", features: [] },
+                    { id: 2, name: "زراعة الأسنان", description: "زراعة الأسنان", image: "", doctor: "د. يوسف عزام", specialization: "ماجستير زراعة الأسنان", features: [] },
+                    { id: 3, name: "تبييض الأسنان", description: "تبييض الأسنان", image: "", doctor: "د. محمود عرفة", specialization: "أخصائي طب الفم والأسنان", features: [] },
+                    { id: 4, name: "طب الفم والأسنان", description: "طب الفم والأسنان", image: "", doctor: "د. محمود عرفة", specialization: "أخصائي طب الفم والأسنان", features: [] }
                 ],
                 appointmentTimes: ["9:00 ص", "10:00 ص", "11:00 ص", "12:00 ظ", "1:00 ظ", "2:00 ظ", "3:00 ظ", "4:00 ع", "5:00 ع", "6:00 ع", "7:00 م", "8:00 م"],
                 whatsapp: "201018673010"
@@ -873,7 +892,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// دالة لاختبار Formspree يدوياً من الـ Console
 window.testFormspreeManually = async function() {
     console.group('🧪 اختبار Formspree يدوياً');
     
@@ -931,7 +949,6 @@ window.testFormspreeManually = async function() {
     console.groupEnd();
 };
 
-// دالة مساعدة لتنسيق التاريخ
 window.formatDate = function(dateString) {
     try {
         const date = new Date(dateString);
@@ -947,7 +964,6 @@ window.formatDate = function(dateString) {
     }
 };
 
-// إضافة رسالة ترحيب في الـ Console
 console.log('%c🏥 عيادات الدكتور محمود عرفة 🦷', 'color: #1e3a8a; font-size: 18px; font-weight: bold;');
 console.log('%c📍 المنوفية، مصر | 📞 01018673010', 'color: #3b82f6; font-size: 14px;');
 console.log('%c💡 استخدم testFormspreeManually() لاختبار النظام', 'color: #10b981; font-size: 12px;');

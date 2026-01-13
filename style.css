@@ -210,6 +210,12 @@ header {
     background-color: var(--secondary-color);
 }
 
+.section-title p {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -242,23 +248,160 @@ header {
 .service-content h3 {
     color: var(--primary-color);
     margin-bottom: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 
 .service-content p {
     color: var(--text-color);
     margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+.doctor-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(248, 250, 252, 0.9), rgba(241, 245, 249, 0.9));
+    border-radius: 8px;
+    border-right: 4px solid var(--primary-color);
+}
+
+.doctor-name {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.doctor-name i {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+}
+
+.doctor-specialization {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 0.8rem;
+}
+
+.service-features {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.service-features h4 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.service-features h4 i {
+    color: var(--secondary-color);
+}
+
+.service-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-features li {
+    padding: 0.3rem 0;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    position: relative;
+    padding-right: 1.5rem;
+}
+
+.service-features li:before {
+    content: "✓";
+    position: absolute;
+    right: 0;
+    color: var(--success-color);
+    font-weight: bold;
+}
+
+.team {
+    padding: 5rem 0;
+    background-color: var(--light-color);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.team-card {
+    background-color: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.team-img {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.team-info {
+    padding: 2rem;
+}
+
+.team-info h3 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.team-title {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.team-specialties {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    text-align: right;
+}
+
+.team-specialties i {
+    color: var(--success-color);
+    margin-left: 8px;
 }
 
 .appointment {
     padding: 5rem 0;
-    background-color: var(--light-color);
+    background-color: var(--white);
 }
 
 .appointment-form {
     max-width: 600px;
     margin: 0 auto;
-    background-color: var(--white);
+    background-color: var(--light-color);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
@@ -326,7 +469,7 @@ header {
 
 .stats {
     padding: 4rem 0;
-    background-color: var(--white);
+    background-color: var(--light-color);
 }
 
 .stats-grid {
@@ -338,7 +481,7 @@ header {
 .stat-card {
     text-align: center;
     padding: 2rem;
-    background-color: var(--light-color);
+    background-color: var(--white);
     border-radius: 10px;
     box-shadow: var(--shadow);
     transition: var(--transition);
@@ -580,5 +723,25 @@ footer {
     
     .appointment-form {
         padding: 1.5rem;
+    }
+    
+    .doctor-info {
+        padding: 0.8rem;
+    }
+    
+    .service-content h3 {
+        font-size: 1.3rem;
+    }
+    
+    .doctor-name {
+        font-size: 1rem;
+    }
+    
+    .service-features li {
+        font-size: 0.85rem;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
     }
 }
